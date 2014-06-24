@@ -1,7 +1,9 @@
 <?php
 
+namespace glue\core {
+
     /**
-     * glue
+     * Glue
      *
      * Provides an easy way to map URLs to classes. URLs can be literal
      * strings or regular expressions.
@@ -10,7 +12,7 @@
      *      * delimiter (/) are automatically escaped: (\/)
      *      * The beginning and end are anchored (^ $)
      *      * An optional end slash is added (/?)
-     *	    * The i option is added for case-insensitive searches
+     * 	    * The i option is added for case-insensitive searches
      *
      * Example:
      *
@@ -25,10 +27,10 @@
      *      }
      * }
      *
-     * glue::stick($urls);
+     * Glue::stick($urls);
      *
      */
-    class glue {
+    class Glue {
 
         /**
          * stick
@@ -41,7 +43,7 @@
          * @throws  BadMethodCallException  Thrown if a corresponding GET,POST is not found
          *
          */
-        static function stick ($urls) {
+        static function stick($urls) {
 
             $method = strtoupper($_SERVER['REQUEST_METHOD']);
             $path = $_SERVER['REQUEST_URI'];
@@ -63,13 +65,16 @@
                             throw new BadMethodCallException("Method, $method, not supported.");
                         }
                     } else {
-                        throw new Exception("Class, $class, not found.");
+                        throw new InvalidArgumentException("Class, $class, not found.");
                     }
                     break;
                 }
             }
             if (!$found) {
-                throw new Exception("URL, $path, not found.");
+                throw new UnexpectedValueException("URL, $path, not found.");
             }
         }
+
     }
+
+}
